@@ -1,27 +1,56 @@
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
+
+class Bogie {
+    private String name;
+    private int capacity;
+
+    // Constructor
+    public Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    // Display method
+    public void display() {
+        System.out.println(name + " Bogie - Capacity: " + capacity);
+    }
+}
 
 public class TrainConsistManagementApp {
-
     public static void main(String[] args) {
 
-        // Create LinkedHashSet to maintain insertion order and uniqueness
-        Set<String> trainFormation = new LinkedHashSet<>();
+        // Step 1: Create list of bogies
+        List<Bogie> bogieList = new ArrayList<>();
 
-        // Adding bogies
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
+        // Step 2: Add passenger bogies
+        bogieList.add(new Bogie("Sleeper", 72));
+        bogieList.add(new Bogie("AC Chair", 56));
+        bogieList.add(new Bogie("First Class", 24));
 
-        // Attempt to add duplicate bogie
-        trainFormation.add("Sleeper"); // This will be ignored
+        // Step 3: Sort bogies by capacity (ascending)
+        bogieList.sort(Comparator.comparingInt(Bogie::getCapacity));
 
-        // Display final train formation
-        System.out.println("Final Train Formation (Insertion Order Preserved):");
+        // Step 4: Display sorted bogies
+        System.out.println("Bogies Sorted by Capacity (Ascending):");
+        for (Bogie b : bogieList) {
+            b.display();
+        }
 
-        for (String bogie : trainFormation) {
-            System.out.println(bogie);
+        // Optional: Descending order
+        bogieList.sort(Comparator.comparingInt(Bogie::getCapacity).reversed());
+
+        System.out.println("\nBogies Sorted by Capacity (Descending):");
+        for (Bogie b : bogieList) {
+            b.display();
         }
     }
 }
