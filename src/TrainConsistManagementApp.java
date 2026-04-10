@@ -1,15 +1,27 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TrainConsistManagementApp {
 
-    // Linear Search Method
-    public static boolean linearSearch(String[] bogieIds, String key) {
-        for (int i = 0; i < bogieIds.length; i++) {
-            if (bogieIds[i].equals(key)) {  // safe string comparison
-                return true; // match found → early termination
+    // Binary Search Method
+    public static boolean binarySearch(String[] bogieIds, String key) {
+        int low = 0;
+        int high = bogieIds.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            int comparison = bogieIds[mid].compareTo(key);
+
+            if (comparison == 0) {
+                return true; // match found
+            } else if (comparison < 0) {
+                low = mid + 1; // search right half
+            } else {
+                high = mid - 1; // search left half
             }
         }
-        return false; // no match found
+        return false; // not found
     }
 
     public static void main(String[] args) {
@@ -19,7 +31,7 @@ public class TrainConsistManagementApp {
         // Step 1: Input number of bogies
         System.out.print("Enter number of bogie IDs: ");
         int n = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         // Step 2: Create array
         String[] bogieIds = new String[n];
@@ -30,18 +42,23 @@ public class TrainConsistManagementApp {
             bogieIds[i] = scanner.nextLine();
         }
 
-        // Step 4: Input search key
+        // Step 4: SORT (important precondition)
+        Arrays.sort(bogieIds);
+
+        System.out.println("\nSorted Bogie IDs: " + Arrays.toString(bogieIds));
+
+        // Step 5: Input search key
         System.out.print("Enter bogie ID to search: ");
-        String searchKey = scanner.nextLine();
+        String key = scanner.nextLine();
 
-        // Step 5: Perform search
-        boolean found = linearSearch(bogieIds, searchKey);
+        // Step 6: Perform binary search
+        boolean found = binarySearch(bogieIds, key);
 
-        // Step 6: Display result
+        // Step 7: Display result
         if (found) {
-            System.out.println("Bogie ID " + searchKey + " found in the consist.");
+            System.out.println("Bogie ID " + key + " found in the consist.");
         } else {
-            System.out.println("Bogie ID " + searchKey + " NOT found in the consist.");
+            System.out.println("Bogie ID " + key + " NOT found in the consist.");
         }
 
         scanner.close();
