@@ -1,44 +1,46 @@
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-class Bogie {
-    String name;
-    int capacity;
-
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    void display() {
-        System.out.println(name + " -> " + capacity);
-    }
-}
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
         System.out.println("================================");
-        System.out.println("UC8 Filter Passenger Bogies Using Streams");
+        System.out.println("UC11 Validate Train ID and Cargo Code ");
         System.out.println("================================\n");
 
-        List<Bogie> bogies = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("General", 90));
+        System.out.print("Enter Train ID (Format: TRN-): ");
+        String trainID = scanner.nextLine();
+        System.out.println("");
 
-        System.out.println("All Bogies:");
-        bogies.forEach(b -> b.display());
+        System.out.print("Enter Cargo Code (Format: PET-AB): ");
+        String cargoCode = scanner.nextLine();
+        System.out.println("");
 
-        List<Bogie> filteredBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        Pattern pattern = Pattern.compile("TRN-\\d{4}", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(trainID);
+        boolean matchFound = matcher.find();
+        System.out.print("Train Code Valid: ");
+        if(matchFound) {
+            System.out.println("True");
+        }
+        else{
+            System.out.println("False");
+        }
 
-        System.out.println("\nFiltered Bogies (Capacity > 60):");
-        filteredBogies.forEach(b -> b.display());
-
-        System.out.println("\nUC8 filtering completed...");
+        Pattern cargoCodePattern = Pattern.compile("PET-[A-Z]{2}", Pattern.CASE_INSENSITIVE);
+        Matcher cargoCodeMatcher = cargoCodePattern.matcher(cargoCode);
+        boolean matchFoundCargoCode = cargoCodeMatcher.find();
+        System.out.print("Cargo Code Valid: ");
+        if(matchFoundCargoCode) {
+            System.out.println("True");
+        }
+        else{
+            System.out.println("False");
+        }
+        System.out.println("\nUC11 validation completed...");
     }
 }
