@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TrainConsistMgmt {
+public class TrainConsistManagementApp {
     static class Bogie {
         String type;
         int capacity;
